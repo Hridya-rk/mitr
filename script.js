@@ -1067,11 +1067,30 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    window.addEventListener('mousedown', handleMouseDown);
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('touchstart', handleTouchStart);
-    window.addEventListener('touchmove', handleTouchMove, false);
-    window.addEventListener('touchend', handleTouchEnd);
+    const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+    if (!isMobileDevice) {
+        window.addEventListener('mousedown', handleMouseDown);
+        window.addEventListener('mousemove', handleMouseMove);
+    }
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    window.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+    // Scroll event fluid splatting
+    let lastScrollY = window.scrollY;
+    window.addEventListener('scroll', () => {
+        const currentScrollY = window.scrollY;
+        const deltaY = currentScrollY - lastScrollY;
+        lastScrollY = currentScrollY;
+
+        if (Math.abs(deltaY) > 1) {
+            const x = cursorNX;
+            const y = cursorNY;
+            const dy = (deltaY / window.innerHeight) * config.SPLAT_FORCE * 0.3;
+            splat(x, 1.0 - y, 0, -dy, generateColor());
+        }
+    }, { passive: true });
 
     updateFrame();
 
