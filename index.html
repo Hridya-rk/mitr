@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>MITR | Ayurveda meets modern women's health</title>
+    <meta name="description" content="MITR is a premium holistic wellness brand combining Ayurvedic wisdom with modern research to support women through the perimenopause spectrum. Supplements, community, and retreats.">
+    <meta property="og:title" content="MITR | Ayurveda meets modern women's health">
+    <meta property="og:description" content="We start where care is missing. Premium organic supplements, supportive community, and holistic wellness retreats tailored for the perimenopause spectrum.">
+    <meta property="og:image" content="logo.png">
+    <meta property="og:type" content="website">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preload" as="image" href="m.png">
+    <link rel="preload" as="image" href="stone1.png">
+    <link rel="preload" as="image" href="stone2.png">
+    <link rel="preload" as="image" href="stone3.png">
+    <link rel="preload" as="image" href="t.png">
+    <link rel="preload" as="image" href="r.png">
+</head>
+<body>
+
+    <!-- Premium Loading Screen -->
+    <div id="loader" class="loader" aria-hidden="true">
+        <div class="loader-gradient-bg">
+            <div class="loader-bubble lb-1"></div>
+            <div class="loader-bubble lb-2"></div>
+            <div class="loader-bubble lb-3"></div>
+        </div>
+        <div class="loader-content">
+            <div class="loader-stones-wrap">
+                <div class="ls ls-1"></div>
+                <div class="ls ls-2"></div>
+                <div class="ls ls-3"></div>
+            </div>
+            <p class="loader-text">Loading<span class="loader-dots"><span>.</span><span>.</span><span>.</span></span></p>
+        </div>
+    </div>
+
+    <!-- Fluid cursor-driven background canvas (behind gradient bubbles) -->
+    <canvas id="fluid-canvas" aria-hidden="true"></canvas>
+
+    <!-- GPU-Accelerated Blurry Aura Gradient Background -->
+    <div id="gradient-bg" class="gradient-bg" aria-hidden="true">
+        <div class="aura-bubble bubble-1"></div>
+        <div class="aura-bubble bubble-2"></div>
+        <div class="aura-bubble bubble-3"></div>
+        <!-- Mouse parallax layer -->
+        <div class="parallax-layer" id="parallax-layer">
+            <div class="parallax-orb po-1"></div>
+            <div class="parallax-orb po-2"></div>
+        </div>
+    </div>
+
+    <header class="sr-only">
+        <h1>MITR - Ayurveda Meets Modern Women's Health</h1>
+    </header>
+
+    <main id="main-content" class="main-hidden">
+
+        <!-- Hero Section -->
+        <section id="hero" class="hero" aria-label="Hero Screen" title="Click anywhere to replay the animation">
+            <div class="logo-wrapper">
+                <div id="logo-container" class="logo-container">
+                    <img src="m.png" class="logo-slice m-slice" alt="M" style="left: 13.6719%; top: 38.4354%; width: 29.0039%; height: 30.7823%;">
+                    <img id="stone1" src="stone1.png" class="logo-slice stone-slice stone1-slice" alt="Top Stone" style="left: 50.9766%; top: 30.1020%; width: 5.4688%; height: 9.5238%;">
+                    <img id="stone2" src="stone2.png" class="logo-slice stone-slice stone2-slice" alt="Middle Stone" style="left: 47.0703%; top: 41.4966%; width: 12.4023%; height: 12.9252%;">
+                    <img id="stone3" src="stone3.png" class="logo-slice stone-slice stone3-slice" alt="Bottom Stone" style="left: 46.9727%; top: 56.2925%; width: 14.5508%; height: 13.7755%;">
+                    <img src="t.png" class="logo-slice t-slice" alt="T" style="left: 62.5%; top: 30.9524%; width: 12.7930%; height: 38.9456%;">
+                    <img src="r.png" class="logo-slice r-slice" alt="R" style="left: 78.125%; top: 38.7755%; width: 9.2773%; height: 30.4422%;">
+                </div>
+            </div>
+
+            <div class="coming-soon-container">
+                <p class="coming-soon">Coming Soon</p>
+            </div>
+
+            <a href="#waitlist" class="scroll-indicator" aria-label="Scroll Down">
+                <span class="scroll-indicator-line"></span>
+            </a>
+        </section>
+
+        <!-- Marquee Separator -->
+        <section class="marquee-section" aria-hidden="true">
+            <div class="marquee-track">
+                <div class="marquee-inner">
+                    <span class="marquee-item">Ayurveda meets modern women's health</span>
+                    <span class="marquee-dot">•</span>
+                    <span class="marquee-item">We start where care is missing — the perimenopause spectrum</span>
+                    <span class="marquee-dot">•</span>
+                    <span class="marquee-item">Supplements</span>
+                    <span class="marquee-dot">•</span>
+                    <span class="marquee-item">Community</span>
+                    <span class="marquee-dot">•</span>
+                    <span class="marquee-item">Holistic Wellness Retreats</span>
+                    <span class="marquee-dot">•</span>
+                    <span class="marquee-item">Ayurveda meets modern women's health</span>
+                    <span class="marquee-dot">•</span>
+                    <span class="marquee-item">We start where care is missing — the perimenopause spectrum</span>
+                    <span class="marquee-dot">•</span>
+                    <span class="marquee-item">Supplements</span>
+                    <span class="marquee-dot">•</span>
+                    <span class="marquee-item">Community</span>
+                    <span class="marquee-dot">•</span>
+                    <span class="marquee-item">Holistic Wellness Retreats</span>
+                    <span class="marquee-dot">•</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Waitlist Section -->
+        <section id="waitlist" class="waitlist-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <h2 class="section-title">Be the first one to get your hands on it.</h2>
+                </div>
+                <div class="cta-container reveal-el delay-3">
+                    <div class="btn-magnetic" id="btn-magnetic">
+                        <a href="https://forms.gle/kHPYR4cSMmnfpW416" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="waitlist-btn">
+                            <span class="btn-text">Join the Waitlist</span>
+                            <span class="btn-glow"></span>
+                            <span class="btn-ripple-container" id="btn-ripple-container"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Floating Instagram Icon -->
+    <a href="https://www.instagram.com/mitr.wellness/" target="_blank" rel="noopener noreferrer" class="ig-float" aria-label="Follow MITR on Instagram">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+        </svg>
+    </a>
+
+    <script src="script.js"></script>
+</body>
+</html>
