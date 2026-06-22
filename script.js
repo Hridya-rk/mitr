@@ -764,7 +764,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function applyInputs() {
       pointers.forEach(p => {
-        if (p.moved) {
+        if (p.moved && p.down) {
           p.moved = false;
           splatPointer(p);
         }
@@ -1008,10 +1008,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let firstMouseMoveHandled = false;
     function handleMouseMove(e) {
       let pointer = pointers[0];
-      let posX = scaleByPixelRatio(e.clientX);
-      let posY = scaleByPixelRatio(e.clientY);
 
-      // Track cursor position for the parallax system
+      // Track cursor position for the parallax system (always runs on hover)
       prevNX = cursorNX; prevNY = cursorNY;
       cursorNX    = e.clientX / window.innerWidth;
       cursorNY    = e.clientY / window.innerHeight;
@@ -1020,13 +1018,27 @@ document.addEventListener('DOMContentLoaded', () => {
       cursorSpeed = Math.hypot(cursorVX, cursorVY);
       idleTimer   = 0;
 
-      if (!firstMouseMoveHandled) {
-        let color = generateColor();
-        updatePointerMoveData(pointer, posX, posY, color);
-        firstMouseMoveHandled = true;
+      // Only splat if mouse button is pressed (click and drag)
+      if (e.buttons > 0) {
+        let posX = scaleByPixelRatio(e.clientX);
+        let posY = scaleByPixelRatio(e.clientY);
+        pointer.down = true;
+
+        if (!firstMouseMoveHandled) {
+          let color = generateColor();
+          updatePointerMoveData(pointer, posX, posY, color);
+          firstMouseMoveHandled = true;
+        } else {
+          updatePointerMoveData(pointer, posX, posY, pointer.color);
+        }
       } else {
-        updatePointerMoveData(pointer, posX, posY, pointer.color);
+        pointer.down = false;
       }
+    }
+
+    function handleMouseUp() {
+      let pointer = pointers[0];
+      pointer.down = false;
     }
 
     function handleTouchStart(e) {
@@ -1036,6 +1048,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let posX = scaleByPixelRatio(touches[i].clientX);
         let posY = scaleByPixelRatio(touches[i].clientY);
         updatePointerDownData(pointer, touches[i].identifier, posX, posY);
+        pointer.down = true;
       }
     }
 
@@ -1055,6 +1068,7 @@ document.addEventListener('DOMContentLoaded', () => {
         cursorSpeed = Math.hypot(cursorVX, cursorVY);
         idleTimer   = 0;
 
+        pointer.down = true;
         updatePointerMoveData(pointer, posX, posY, pointer.color);
       }
     }
@@ -1064,6 +1078,7 @@ document.addEventListener('DOMContentLoaded', () => {
       let pointer = pointers[0];
       for (let i = 0; i < touches.length; i++) {
         updatePointerUpData(pointer);
+        pointer.down = false;
       }
     }
 
@@ -1072,6 +1087,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!isMobileDevice) {
         window.addEventListener('mousedown', handleMouseDown);
         window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mouseup', handleMouseUp);
+        window.addEventListener('mouseleave', handleMouseUp);
     }
     window.addEventListener('touchstart', handleTouchStart, { passive: true });
     window.addEventListener('touchmove', handleTouchMove, { passive: true });
