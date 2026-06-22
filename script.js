@@ -718,20 +718,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const dt = calcDeltaTime();
       if (resizeCanvas()) initFramebuffers();
 
-      // Gyroscope tilt updates cursor tracking & splats the fluid simulation
+      // Gyroscope tilt updates cursor tracking for parallax bubbles (no fluid splats to prevent persistent blobs)
       if (hasGyro) {
-          const prevNX_gyro = cursorNX;
-          const prevNY_gyro = cursorNY;
           gyroLX += (gyroX - gyroLX) * 0.04;
           gyroLY += (gyroY - gyroLY) * 0.04;
           cursorNX = cursorNX * 0.5 + gyroLX * 0.5;
           cursorNY = cursorNY * 0.5 + gyroLY * 0.5;
-
-          const dx = (cursorNX - prevNX_gyro) * config.SPLAT_FORCE * 0.15;
-          const dy = (cursorNY - prevNY_gyro) * config.SPLAT_FORCE * 0.15;
-          if (Math.abs(dx) > 0.005 || Math.abs(dy) > 0.005) {
-              splat(cursorNX, 1.0 - cursorNY, dx, -dy, generateColor());
-          }
       }
 
       updateColors(dt);
