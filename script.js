@@ -58,6 +58,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let cursorVX = 0,   cursorVY = 0;
     let cursorSpeed = 0;
     let idleTimer   = 0;
+    let userInteracted = false;
+    let hasMouseMoved  = false;
 
     /* -- GYROSCOPE -- */
     let gyroX = 0, gyroY = 0, gyroLX = 0, gyroLY = 0, hasGyro = false;
@@ -1007,6 +1009,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let firstMouseMoveHandled = false;
     function handleMouseMove(e) {
+      hasMouseMoved = true;
       let pointer = pointers[0];
 
       // Track cursor position for the parallax system (always runs on hover)
@@ -1097,11 +1100,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Scroll event fluid splatting
     let lastScrollY = window.scrollY;
     window.addEventListener('scroll', () => {
+        if (isMobileDevice) return; // Mobile scrolls are touch-driven, handled by touchmove
+        if (!userInteracted || !hasMouseMoved) return; // Block automated or default-center scroll splats
+
         const currentScrollY = window.scrollY;
         const deltaY = currentScrollY - lastScrollY;
         lastScrollY = currentScrollY;
 
-        if (Math.abs(deltaY) > 1) {
+        if (Math.abs(deltaY) > 6) { // Increased threshold to filter out micro-scroll jitter
             const x = cursorNX;
             const y = cursorNY;
             const dy = (deltaY / window.innerHeight) * config.SPLAT_FORCE * 0.3;
@@ -1346,6 +1352,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Global listener to proactively unlock AudioContext on first user interaction
     function unlockAudioCtx() {
         try {
+            userInteracted = true; // Set interaction flag
             if (!audioCtx) {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             }
@@ -1364,12 +1371,14 @@ document.addEventListener('DOMContentLoaded', () => {
         document.removeEventListener('touchstart', unlockAudioCtx);
         document.removeEventListener('mousedown', unlockAudioCtx);
         document.removeEventListener('keydown', unlockAudioCtx);
+        document.removeEventListener('wheel', unlockAudioCtx);
     }
 
     document.addEventListener('click', unlockAudioCtx, { passive: true });
     document.addEventListener('touchstart', unlockAudioCtx, { passive: true });
     document.addEventListener('mousedown', unlockAudioCtx, { passive: true });
     document.addEventListener('keydown', unlockAudioCtx, { passive: true });
+    document.addEventListener('wheel', unlockAudioCtx, { passive: true });
 
     function playTypewriterClick() {
         try {
