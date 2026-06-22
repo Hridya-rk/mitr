@@ -766,7 +766,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function applyInputs() {
       pointers.forEach(p => {
-        if (p.moved && p.down) {
+        if (p.moved) {
           p.moved = false;
           splatPointer(p);
         }
@@ -1011,7 +1011,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleMouseMove(e) {
       hasMouseMoved = true;
       let pointer = pointers[0];
-
+      
       // Track cursor position for the parallax system (always runs on hover)
       prevNX = cursorNX; prevNY = cursorNY;
       cursorNX    = e.clientX / window.innerWidth;
@@ -1021,21 +1021,15 @@ document.addEventListener('DOMContentLoaded', () => {
       cursorSpeed = Math.hypot(cursorVX, cursorVY);
       idleTimer   = 0;
 
-      // Only splat if mouse button is pressed (click and drag)
-      if (e.buttons > 0) {
-        let posX = scaleByPixelRatio(e.clientX);
-        let posY = scaleByPixelRatio(e.clientY);
-        pointer.down = true;
+      let posX = scaleByPixelRatio(e.clientX);
+      let posY = scaleByPixelRatio(e.clientY);
 
-        if (!firstMouseMoveHandled) {
-          let color = generateColor();
-          updatePointerMoveData(pointer, posX, posY, color);
-          firstMouseMoveHandled = true;
-        } else {
-          updatePointerMoveData(pointer, posX, posY, pointer.color);
-        }
+      if (!firstMouseMoveHandled) {
+        let color = generateColor();
+        updatePointerMoveData(pointer, posX, posY, color);
+        firstMouseMoveHandled = true;
       } else {
-        pointer.down = false;
+        updatePointerMoveData(pointer, posX, posY, pointer.color);
       }
     }
 
