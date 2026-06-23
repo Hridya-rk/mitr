@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loader      = document.getElementById('loader');
     const mainContent = document.getElementById('main-content');
 
-    const images = ['m.png', 'stone1.png', 'stone2.png', 'stone3.png', 't.png', 'r.png'];
+    const images = ['m.svg', 'stone1.svg', 'stone2.svg', 'stone3.svg', 't.svg', 'r.svg'];
     let loadedCount = 0, assetsReady = false;
 
     function onAssetsReady() {
