@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
       BACK_COLOR: { r: 0, g: 0, b: 0 },
       TRANSPARENT: true,
       RAINBOW_MODE: false,
-      COLOR: '#E88A8A'
+      COLOR: '#F0FF00'
     };
 
     /* -- CURSOR STATE & BUBBLE PARALLAX TRACKING -- */
@@ -1208,134 +1208,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const heroSection         = document.getElementById('hero');
     const comingSoonContainer = document.querySelector('.coming-soon-container');
 
-    const stoneKeys   = ['stone3', 'stone2', 'stone1'];
-    const state       = {};
-    let animFrameId   = null;
     let activeTimeouts = [];
-    let sequenceIndex = 0;
-
-    const gravity = 0.55;
-    const bounce  = 0.22;
-
-    function initStones() {
-        stoneKeys.forEach(key => {
-            const el = document.getElementById(key);
-            if (!el) return;
-            state[key] = {
-                el,
-                targetX:  parseFloat(el.style.left),
-                targetY:  parseFloat(el.style.top),
-                w:        parseFloat(el.style.width),
-                h:        parseFloat(el.style.height),
-                currentX: parseFloat(el.style.left) + (Math.random() * 4 - 2),
-                currentY: -120,
-                vy: 0, vx: 0,
-                rotation: 0, vRot: 0,
-                scaleX: 1, scaleY: 1,
-                status: 'waiting',
-            };
-            el.style.opacity   = '0';
-            el.style.transform = 'translate3d(0, -1000px, 0)';
-        });
-        sequenceIndex = 0;
-    }
-
-    function triggerDrop(key) {
-        if (!state[key]) return;
-        state[key].status = 'falling';
-        state[key].el.style.opacity = '1';
-    }
 
     function startSequence() {
         activeTimeouts.forEach(clearTimeout);
         activeTimeouts = [];
         comingSoonContainer.classList.remove('visible');
-        initStones();
-        if (animFrameId) cancelAnimationFrame(animFrameId);
-        const t1 = setTimeout(() => triggerDrop(stoneKeys[0]), 800);
-        activeTimeouts.push(t1);
-        animFrameId = requestAnimationFrame(animate);
+        
+        const container = document.getElementById('logo-container');
+        if (container) {
+            container.classList.remove('run-logo-animation');
+            void container.offsetWidth; // Trigger reflow
+            container.classList.add('run-logo-animation');
+        }
+
+        // Schedule COMING SOON fade-in after logo animation (approx 5.0 seconds)
+        const t = setTimeout(() => {
+            comingSoonContainer.classList.add('visible');
+        }, 5000);
+        activeTimeouts.push(t);
     }
 
     heroSection.addEventListener('click', (e) => {
         if (e.target.closest('.scroll-indicator')) return;
         startSequence();
     });
-
-    function animate() {
-        let allSettled = true;
-
-        stoneKeys.forEach(key => {
-            const s = state[key];
-            if (!s) return;
-            const el = s.el;
-
-            if (s.status === 'falling') {
-                allSettled = false;
-                s.vy += gravity; s.currentY += s.vy; s.currentX += s.vx;
-
-                if (s.currentY >= s.targetY) {
-                    s.currentY = s.targetY;
-                    s.vy = -s.vy * bounce;
-                    const force = Math.abs(s.vy * 2.5) + 3;
-                    s.rotation = (Math.random() > 0.5 ? 1 : -1) * Math.min(force, 15);
-                    s.vRot  = -s.rotation * 0.12;
-                    s.scaleY = 0.8; s.scaleX = 1.15;
-
-                    if (key === 'stone2' && state['stone3']?.status === 'settling') {
-                        state['stone3'].rotation += (Math.random() * 3 - 1.5);
-                        state['stone3'].vRot = -state['stone3'].rotation * 0.08;
-                    } else if (key === 'stone1') {
-                        ['stone2','stone3'].forEach(k => {
-                            if (state[k]?.status === 'settling') {
-                                state[k].rotation += (Math.random() * 2 - 1);
-                                state[k].vRot = -state[k].rotation * 0.07;
-                            }
-                        });
-                    }
-
-                    if (Math.abs(s.vy) < 0.4) {
-                        s.status = 'settling'; s.vy = 0;
-                        sequenceIndex++;
-                        if (sequenceIndex < stoneKeys.length) {
-                            const t = setTimeout(() => triggerDrop(stoneKeys[sequenceIndex]), 600);
-                            activeTimeouts.push(t);
-                        }
-                    }
-                }
-
-            } else if (s.status === 'settling') {
-                s.vy   = (s.vy   + 0.08 * (s.targetY - s.currentY)) * 0.82;
-                s.vx   = (s.vx   + 0.08 * (s.targetX - s.currentX)) * 0.82;
-                s.vRot = (s.vRot + 0.06 * (0 - s.rotation))          * 0.82;
-                s.currentY += s.vy; s.currentX += s.vx; s.rotation += s.vRot;
-                s.scaleX   += (1 - s.scaleX) * 0.12;
-                s.scaleY   += (1 - s.scaleY) * 0.12;
-
-                const settled =
-                    Math.abs(s.currentY - s.targetY) < 0.05 && Math.abs(s.vy) < 0.05 &&
-                    Math.abs(s.rotation) < 0.1 && Math.abs(s.vRot) < 0.05;
-
-                if (settled) {
-                    s.currentY = s.targetY; s.currentX = s.targetX;
-                    s.rotation = 0; s.scaleX = 1; s.scaleY = 1; s.status = 'done';
-                } else { allSettled = false; }
-
-            } else if (s.status === 'waiting') { allSettled = false; }
-
-            const tx = (s.currentX - s.targetX) * (100 / s.w);
-            const ty = (s.currentY - s.targetY) * (100 / s.h);
-            el.style.transform =
-                `translate3d(${tx}%, ${ty}%, 0) rotate(${s.rotation}deg) scale(${s.scaleX},${s.scaleY})`;
-        });
-
-        if (allSettled && sequenceIndex >= stoneKeys.length) {
-            const rt = setTimeout(() => comingSoonContainer.classList.add('visible'), 400);
-            activeTimeouts.push(rt);
-        } else {
-            animFrameId = requestAnimationFrame(animate);
-        }
-    }
 
 
     /* ==============================================
