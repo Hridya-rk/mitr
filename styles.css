@@ -238,7 +238,7 @@ body { overflow-x: hidden; min-height: 100vh; background-color: var(--color-bg);
     position: relative;
     width: 100%;
     max-width: 600px;
-    aspect-ratio: 1024 / 588;
+    aspect-ratio: 1024 / 576;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -271,8 +271,8 @@ body { overflow-x: hidden; min-height: 100vh; background-color: var(--color-bg);
 
 .aura-pulse {
     position: absolute;
-    top: 45%;
-    left: 54%;
+    top: 47.74%;
+    left: 53.03%;
     transform: translate(-50%, -50%) scale(0);
     width: 140px;
     height: 140px;
