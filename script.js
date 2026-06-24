@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
       BACK_COLOR: { r: 0, g: 0, b: 0 },
       TRANSPARENT: true,
       RAINBOW_MODE: false,
-      COLOR: '#F0FF00'
+      COLOR: '#F8EC33'
     };
 
     /* -- CURSOR STATE & BUBBLE PARALLAX TRACKING -- */

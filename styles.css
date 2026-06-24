@@ -3,7 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap');
 
 :root {
-    --color-primary: #F0FF00;
+    --color-primary: #F8EC33;
     --color-bg: #445761;
     --color-stone: #FFFFFF;
     --font-logo: 'Chillax', sans-serif;
@@ -90,7 +90,7 @@ body { overflow-x: hidden; min-height: 100vh; background-color: var(--color-bg);
     box-shadow:
         0 0 0 0 rgba(255,255,255,0),
         0 2px 8px  rgba(0,0,0,0.08),
-        0 0 18px 3px rgba(240, 255, 0, 0.4);
+        0 0 18px 3px rgba(248, 236, 51, 0.4);
     will-change: transform, box-shadow;
 }
 
@@ -277,7 +277,7 @@ body { overflow-x: hidden; min-height: 100vh; background-color: var(--color-bg);
     width: 140px;
     height: 140px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(240, 255, 0, 0.45) 0%, rgba(240, 255, 0, 0.15) 50%, transparent 70%);
+    background: radial-gradient(circle, rgba(248, 236, 51, 0.45) 0%, rgba(248, 236, 51, 0.15) 50%, transparent 70%);
     opacity: 0;
     pointer-events: none;
     z-index: 1;
@@ -460,8 +460,8 @@ body { overflow-x: hidden; min-height: 100vh; background-color: var(--color-bg);
     overflow: hidden;
     background: #2E3B42;
     padding: 1.4rem 0;
-    border-top: 1px solid rgba(240, 255, 0, 0.15);
-    border-bottom: 1px solid rgba(240, 255, 0, 0.15);
+    border-top: 1px solid rgba(248, 236, 51, 0.15);
+    border-bottom: 1px solid rgba(248, 236, 51, 0.15);
     position: relative;
     z-index: 10;
 }
@@ -623,7 +623,7 @@ body { overflow-x: hidden; min-height: 100vh; background-color: var(--color-bg);
 }
 
 .btn-primary {
-    background: #F0FF00;
+    background: #F8EC33;
     color: var(--color-bg);
     box-shadow:
         0 4px 14px rgba(46, 59, 66, 0.12),
@@ -692,13 +692,13 @@ body { overflow-x: hidden; min-height: 100vh; background-color: var(--color-bg);
     0%, 100% {
         box-shadow:
             0 4px 12px rgba(46, 59, 66, 0.12),
-            0 0 12px rgba(240, 255, 0, 0.1),
+            0 0 12px rgba(248, 236, 51, 0.1),
             inset 0 1px 0 rgba(255, 255, 255, 0.9);
     }
     50% {
         box-shadow:
             0 6px 16px rgba(46, 59, 66, 0.18),
-            0 0 20px rgba(240, 255, 0, 0.2),
+            0 0 20px rgba(248, 236, 51, 0.2),
             inset 0 1px 0 rgba(255, 255, 255, 0.95);
     }
 }
