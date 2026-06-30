@@ -260,12 +260,13 @@ body { overflow-x: hidden; min-height: 100vh; background-color: var(--color-bg);
 }
 
 .m-slice, .t-slice, .r-slice {
-    filter: url(#yellow-color);
+    color: var(--color-primary);
     will-change: transform, opacity, clip-path;
 }
 
 .stone-slice {
-    filter: brightness(0) invert(1) drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+    color: var(--color-stone);
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
     will-change: transform, opacity;
 }
 
@@ -338,28 +339,28 @@ body { overflow-x: hidden; min-height: 100vh; background-color: var(--color-bg);
 
 @keyframes stone3-yellow {
     0%, 85% {
-        filter: brightness(0) invert(1) drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+        color: var(--color-stone);
     }
     100% {
-        filter: url(#yellow-color) drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+        color: var(--color-primary);
     }
 }
 
 @keyframes stone2-yellow {
     0%, 80% {
-        filter: brightness(0) invert(1) drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+        color: var(--color-stone);
     }
     100% {
-        filter: url(#yellow-color) drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+        color: var(--color-primary);
     }
 }
 
 @keyframes stone1-yellow {
     0%, 72% {
-        filter: brightness(0) invert(1) drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+        color: var(--color-stone);
     }
     100% {
-        filter: url(#yellow-color) drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+        color: var(--color-primary);
     }
 }
 
@@ -591,14 +592,15 @@ body { overflow-x: hidden; min-height: 100vh; background-color: var(--color-bg);
    PRIMARY WAITLIST BUTTON — Magnetic Hero Element
    ============================================= */
 
-/* Magnetic wrapper — wider hit-area for proximity detection */
-.btn-magnetic {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
+/* Container for multiple CTA buttons */
+.cta-buttons-wrap {
+    display: flex;
+    flex-flow: row wrap;
     justify-content: center;
-    padding: 48px;
-    cursor: none;
+    align-items: center;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 100%;
 }
 
 .btn {
@@ -606,38 +608,55 @@ body { overflow-x: hidden; min-height: 100vh; background-color: var(--color-bg);
     align-items: center;
     justify-content: center;
     position: relative;
-    padding: 1.55rem 3.75rem;
+    padding: 1.55rem 2rem;
     font-family: var(--font-coming-soon);
     font-weight: 600;
     font-size: 1rem;
-    letter-spacing: 0.22em;
-    text-indent: 0.22em;
+    letter-spacing: 0.16em;
+    text-indent: 0.16em;
     text-transform: uppercase;
     text-decoration: none;
     border-radius: 100px;
     cursor: none;
     overflow: visible;
-    /* Smooth transform for magnetic pull */
-    transition: transform 0.08s linear, box-shadow 0.55s cubic-bezier(0.16,1,0.3,1);
+    border: 2px solid #2E3B42;
+    /* Smooth transform for press mechanics and shadow reduction */
+    transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
     will-change: transform, box-shadow;
+    transform: translate(0);
+    flex: 0 1 320px;
+    min-width: 280px;
+    white-space: nowrap;
+}
+
+@media (max-width: 767px) {
+    .btn {
+        padding: 1.25rem 1rem;
+        font-size: 0.82rem;
+        letter-spacing: 0.1em;
+        text-indent: 0.1em;
+        min-width: 240px;
+    }
 }
 
 .btn-primary {
     background: #F8EC33;
-    color: var(--color-bg);
-    box-shadow:
-        0 4px 14px rgba(46, 59, 66, 0.12),
-        0 1px 3px rgba(46, 59, 66, 0.06),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    animation: btn-float 6s ease-in-out infinite;
+    color: #2E3B42;
+    border: 2px solid #2E3B42;
+    box-shadow: 4px 4px 0px 0px #2E3B42;
 }
 
-/* Hovered state — enhanced depth without any yellow glow */
-.btn-primary.is-hovered {
-    box-shadow:
-        0 8px 24px rgba(46, 59, 66, 0.18),
-        0 2px 6px rgba(46, 59, 66, 0.10),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+/* Hovered state — CauseHouse style push down */
+.btn-primary:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px 0px #2E3B42;
+    animation: none;
+}
+
+/* Active clicked state — CauseHouse style push down further */
+.btn-primary:active {
+    transform: translate3d(3px, 3px, 0);
+    box-shadow: 1px 1px 0px 0px #2E3B42;
     animation: none;
 }
 
@@ -682,26 +701,7 @@ body { overflow-x: hidden; min-height: 100vh; background-color: var(--color-bg);
     z-index: 2;
 }
 
-/* Float animation — gentle levitation */
-@keyframes btn-float {
-    0%, 100% { transform: translateY(0px); }
-    50%       { transform: translateY(-7px); }
-}
 
-@keyframes btn-glow-breathe {
-    0%, 100% {
-        box-shadow:
-            0 4px 12px rgba(46, 59, 66, 0.12),
-            0 0 12px rgba(248, 236, 51, 0.1),
-            inset 0 1px 0 rgba(255, 255, 255, 0.9);
-    }
-    50% {
-        box-shadow:
-            0 6px 16px rgba(46, 59, 66, 0.18),
-            0 0 20px rgba(248, 236, 51, 0.2),
-            inset 0 1px 0 rgba(255, 255, 255, 0.95);
-    }
-}
 
 @keyframes halo-pulse {
     0%, 100% { opacity: 0.55; transform: scale(1); }
@@ -790,7 +790,7 @@ body { overflow-x: hidden; min-height: 100vh; background-color: var(--color-bg);
     .section-title    { font-size: 3.25rem; }
     .section-subtitle { font-size: 1.05rem; }
 
-    .btn { padding: 1.85rem 5.5rem; font-size: 1.05rem; }
+    .btn { padding: 1.55rem 2.2rem; font-size: 1.05rem; letter-spacing: 0.14em; text-indent: 0.14em; }
 }
 
 /* =============================================
@@ -802,7 +802,7 @@ body { overflow-x: hidden; min-height: 100vh; background-color: var(--color-bg);
     .waitlist-section { padding: 18rem 6rem 22rem; }
     .section-title    { font-size: 3.75rem; }
 
-    .btn { padding: 2rem 6.5rem; font-size: 1.1rem; min-width: 340px; }
+    .btn { padding: 1.75rem 2.5rem; font-size: 1.1rem; letter-spacing: 0.16em; text-indent: 0.16em; }
 }
 
 /* =============================================
@@ -853,7 +853,7 @@ body {
    ============================================= */
 @media (max-width: 390px) {
     .section-title  { font-size: 1.75rem; }
-    .btn            { padding: 1.35rem 2.5rem; font-size: 0.88rem; }
+    .btn            { padding: 1.1rem 0.8rem; font-size: 0.76rem; letter-spacing: 0.08em; text-indent: 0.08em; }
     .marquee-item   { font-size: 0.82rem; padding: 0 1.5rem; }
     .btn-magnetic   { padding: 36px; }
 }

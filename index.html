@@ -19,13 +19,7 @@
 </head>
 <body>
 
-    <!-- SVG Filter for solid #F8EC33 colorization -->
-    <svg style="position: absolute; width: 0; height: 0; pointer-events: none;" aria-hidden="true">
-        <filter id="yellow-color">
-            <feFlood flood-color="#F8EC33" result="flood" />
-            <feComposite in="flood" in2="SourceAlpha" operator="in" />
-        </filter>
-    </svg>
+
 
     <!-- Premium Loading Screen -->
     <div id="loader" class="loader" aria-hidden="true">
@@ -70,12 +64,12 @@
             <div class="logo-wrapper">
                 <div id="logo-container" class="logo-container">
                     <div class="aura-pulse"></div>
-                    <img src="m.svg" class="logo-slice m-slice" alt="M" style="left: 15.0391%; top: 38.5417%; width: 27.6367%; height: 30.2083%;">
-                    <img id="stone1" src="stone1.svg" class="logo-slice stone-slice stone1-slice" alt="Top Stone" style="left: 50.2930%; top: 30.5556%; width: 5.3711%; height: 9.5486%;">
-                    <img id="stone2" src="stone2.svg" class="logo-slice stone-slice stone2-slice" alt="Middle Stone" style="left: 46.6797%; top: 41.4931%; width: 11.8164%; height: 12.8472%;">
-                    <img id="stone3" src="stone3.svg" class="logo-slice stone-slice stone3-slice" alt="Bottom Stone" style="left: 46.5820%; top: 55.7292%; width: 13.8672%; height: 13.7153%;">
-                    <img src="t.svg" class="logo-slice t-slice" alt="T" style="left: 60.9375%; top: 31.4236%; width: 12.4023%; height: 38.0208%;">
-                    <img src="r.svg" class="logo-slice r-slice" alt="R" style="left: 75.9766%; top: 38.8889%; width: 8.9844%; height: 29.8611%;">
+                    <svg class="logo-slice m-slice" viewBox="0 0 283 174" style="left: 15.0391%; top: 38.5417%; width: 27.6367%; height: 30.2083%;" aria-label="M"><path d="M 9.00 40.00 L 5.00 51.00 L 2.22 61.00 L 0.89 68.00 L 0.00 76.00 L 0.00 169.00 L 0.67 171.33 L 2.33 172.67 L 4.00 173.00 L 18.89 172.89 L 20.89 171.89 L 21.89 169.89 L 22.00 78.00 L 22.67 72.00 L 24.00 65.00 L 28.89 51.00 L 30.89 47.00 L 35.11 40.78 L 40.11 35.00 L 46.00 29.78 L 52.00 26.00 L 58.00 23.67 L 66.00 21.56 L 75.00 20.11 L 79.00 20.44 L 91.00 23.11 L 99.00 26.22 L 105.00 29.89 L 111.00 35.00 L 117.11 42.00 L 120.33 47.00 L 124.33 55.00 L 126.89 63.00 L 128.44 70.00 L 130.00 83.00 L 130.00 169.00 L 130.33 170.67 L 131.67 172.33 L 134.00 173.00 L 148.00 173.00 L 149.67 172.67 L 150.89 171.89 L 151.89 169.89 L 152.00 77.00 L 152.44 73.00 L 155.11 62.00 L 158.89 51.00 L 161.67 46.00 L 167.44 38.00 L 171.00 34.22 L 176.00 30.11 L 183.00 25.78 L 188.00 23.67 L 196.00 21.56 L 205.00 20.11 L 210.00 20.56 L 221.00 23.00 L 225.00 24.33 L 231.00 27.22 L 239.00 33.00 L 242.56 36.33 L 247.00 42.00 L 252.00 50.00 L 254.22 55.00 L 257.89 67.00 L 259.22 73.00 L 260.00 80.00 L 260.11 169.89 L 260.67 171.33 L 261.67 172.33 L 264.00 173.00 L 278.89 172.89 L 280.33 172.33 L 281.67 170.67 L 282.00 169.00 L 282.00 78.00 L 281.44 73.00 L 277.78 54.00 L 275.33 46.00 L 274.00 43.00 L 268.00 32.00 L 264.22 26.67 L 260.44 22.11 L 256.00 17.67 L 252.00 14.33 L 247.00 10.78 L 240.00 7.00 L 234.00 4.33 L 230.00 3.11 L 223.00 1.56 L 211.00 0.00 L 202.00 0.00 L 195.00 0.78 L 187.00 2.33 L 181.00 4.22 L 169.00 10.33 L 163.00 14.67 L 157.33 20.00 L 153.89 24.00 L 150.33 29.00 L 145.11 39.00 L 143.56 43.00 L 142.56 44.33 L 141.67 44.78 L 140.78 44.33 L 139.78 43.00 L 137.00 37.00 L 132.56 29.00 L 128.00 23.00 L 123.67 18.56 L 118.44 14.00 L 111.00 9.22 L 101.00 4.33 L 90.00 1.44 L 78.00 0.00 L 69.00 0.00 L 62.00 0.78 L 54.00 2.22 L 47.00 4.33 L 37.00 9.11 L 31.33 12.67 L 24.33 18.56 L 18.00 25.56 L 14.78 30.00 Z" fill="currentColor" fill-rule="evenodd" /></svg>
+                    <svg class="logo-slice stone-slice stone1-slice" id="stone1" viewBox="0 0 55 55" style="left: 50.2930%; top: 30.5556%; width: 5.3711%; height: 9.5486%;" aria-label="Top Stone"><path d="M 26.00 0.22 L 20.00 1.22 L 16.00 2.56 L 12.00 4.89 L 7.22 9.11 L 5.00 12.00 L 2.67 17.00 L 0.44 25.00 L 0.44 28.00 L 1.22 32.00 L 4.00 40.00 L 5.78 43.00 L 9.11 46.56 L 13.00 49.44 L 17.00 51.56 L 24.00 53.44 L 29.00 53.56 L 36.00 51.78 L 40.00 49.78 L 43.89 46.78 L 48.00 42.44 L 51.00 38.00 L 53.00 33.00 L 53.67 30.00 L 54.00 24.00 L 53.22 19.00 L 51.22 14.00 L 49.33 11.00 L 46.00 7.56 L 42.00 4.67 L 37.00 2.11 L 31.00 0.56 Z" fill="currentColor" fill-rule="evenodd" /></svg>
+                    <svg class="logo-slice stone-slice stone2-slice" id="stone2" viewBox="0 0 121 74" style="left: 46.6797%; top: 41.4931%; width: 11.8164%; height: 12.8472%;" aria-label="Middle Stone"><path d="M 116.82 11.50 L 113.36 6.65 L 108.50 3.08 L 102.00 0.99 L 94.50 0.33 L 86.25 1.60 L 56.50 9.13 L 29.50 13.23 L 17.25 15.64 L 12.25 17.27 L 7.75 19.50 L 4.60 22.05 L 2.25 25.25 L 1.01 28.50 L 0.35 32.75 L 1.81 42.75 L 5.58 53.50 L 9.96 61.50 L 15.25 67.30 L 21.00 70.79 L 28.75 72.77 L 38.75 72.85 L 51.50 70.89 L 63.75 68.04 L 84.25 62.14 L 97.25 57.44 L 107.75 52.11 L 114.60 46.48 L 117.31 42.75 L 118.73 39.75 L 119.63 36.75 L 120.26 32.00 L 119.68 22.00 L 118.20 15.00 Z" fill="currentColor" fill-rule="evenodd" /></svg>
+                    <svg class="logo-slice stone-slice stone3-slice" id="stone3" viewBox="0 0 142 79" style="left: 46.5820%; top: 55.7292%; width: 13.8672%; height: 13.7153%;" aria-label="Bottom Stone"><path d="M 2.74 18.50 L 1.10 24.50 L 0.00 33.25 L 0.12 44.25 L 1.92 51.00 L 4.98 56.00 L 9.50 60.25 L 15.00 63.58 L 23.50 67.06 L 34.75 70.17 L 53.75 73.61 L 82.00 76.69 L 93.75 77.63 L 107.00 78.00 L 114.75 77.65 L 120.75 76.85 L 129.00 74.52 L 133.25 72.18 L 136.13 69.70 L 138.40 66.75 L 140.15 63.00 L 141.65 55.75 L 141.50 39.50 L 140.68 30.50 L 138.62 23.75 L 135.01 18.00 L 129.75 12.93 L 123.25 8.94 L 115.25 5.74 L 107.25 3.62 L 99.25 2.20 L 87.25 1.00 L 52.25 0.75 L 40.00 1.10 L 30.00 2.08 L 18.25 4.62 L 11.50 7.70 L 6.45 12.00 L 4.36 15.00 Z" fill="currentColor" fill-rule="evenodd" /></svg>
+                    <svg class="logo-slice t-slice" viewBox="0 0 127 219" style="left: 60.9375%; top: 31.4236%; width: 12.4023%; height: 38.0208%;" aria-label="T"><path d="M 36.75 0.85 L 36.00 1.75 L 35.85 45.25 L 35.00 45.95 L 2.00 45.75 L 1.00 46.00 L 0.35 46.75 L 0.35 64.00 L 1.00 64.80 L 1.75 65.00 L 35.00 65.00 L 35.95 65.75 L 36.00 162.50 L 37.00 168.25 L 37.00 171.75 L 38.20 177.25 L 40.15 183.75 L 44.15 192.50 L 48.15 198.50 L 50.50 201.25 L 54.25 205.00 L 57.25 207.45 L 62.00 210.50 L 68.00 213.50 L 71.00 214.65 L 72.50 214.85 L 74.00 215.65 L 76.25 215.90 L 78.00 216.60 L 85.50 217.75 L 94.75 218.00 L 100.50 217.50 L 105.75 216.65 L 107.50 215.95 L 109.75 215.65 L 111.25 214.85 L 112.75 214.65 L 119.75 211.55 L 123.50 209.40 L 126.35 207.25 L 126.75 205.75 L 126.75 188.00 L 126.40 187.10 L 125.75 187.10 L 122.25 189.65 L 116.25 193.00 L 111.75 194.90 L 106.00 196.65 L 98.50 198.00 L 91.00 198.00 L 85.25 197.00 L 80.50 195.65 L 76.25 193.80 L 73.00 191.85 L 70.00 189.50 L 66.50 186.00 L 64.10 182.75 L 61.95 179.00 L 59.85 174.00 L 59.65 172.25 L 58.85 170.50 L 58.75 168.25 L 57.75 163.75 L 57.75 66.00 L 58.05 65.30 L 58.75 65.00 L 126.00 64.90 L 126.55 64.45 L 126.75 63.75 L 126.65 46.50 L 126.00 45.95 L 125.00 45.75 L 58.50 45.85 L 57.75 44.75 L 57.65 1.50 L 57.20 1.00 L 56.25 0.75 Z" fill="currentColor" fill-rule="evenodd" /></svg>
+                    <svg class="logo-slice r-slice" viewBox="0 0 92 172" style="left: 75.9766%; top: 38.8889%; width: 8.9844%; height: 29.8611%;" aria-label="R"><path d="M 87.00 4.00 L 80.00 1.78 L 69.00 0.00 L 55.00 0.00 L 49.00 0.67 L 41.00 2.44 L 34.00 5.33 L 28.00 8.44 L 21.00 13.67 L 16.33 18.11 L 14.00 21.00 L 7.78 31.00 L 5.56 36.00 L 2.22 47.00 L 0.78 54.00 L 0.00 61.00 L 0.00 167.00 L 0.33 168.67 L 1.67 170.33 L 4.00 171.00 L 18.00 171.00 L 19.67 170.67 L 20.89 169.89 L 21.89 167.89 L 22.00 62.00 L 22.56 57.00 L 23.67 52.00 L 25.44 47.00 L 27.78 42.00 L 32.33 35.00 L 38.00 29.33 L 45.00 24.78 L 52.00 22.33 L 60.00 21.00 L 67.00 21.00 L 73.00 21.67 L 79.00 23.00 L 87.89 26.44 L 89.89 26.33 L 90.67 25.56 L 91.00 24.00 L 90.89 9.00 L 89.33 5.78 Z" fill="currentColor" fill-rule="evenodd" /></svg>
                 </div>
             </div>
 
@@ -118,12 +112,13 @@
                 <div class="section-header">
                     <h2 class="section-title">Be the first one to get your hands on it.</h2>
                 </div>
-                <div class="cta-container reveal-el delay-3">
-                    <div class="btn-magnetic" id="btn-magnetic">
+                <div class="cta-container">
+                    <div class="cta-buttons-wrap">
                         <a href="https://forms.gle/kHPYR4cSMmnfpW416" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="waitlist-btn">
                             <span class="btn-text">Join the Waitlist</span>
-                            <span class="btn-glow"></span>
-                            <span class="btn-ripple-container" id="btn-ripple-container"></span>
+                        </a>
+                        <a href="http://localhost:3000" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="consult-btn">
+                            <span class="btn-text">Schedule a consultation</span>
                         </a>
                     </div>
                 </div>

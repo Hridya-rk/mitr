@@ -119,6 +119,18 @@ document.addEventListener('DOMContentLoaded', () => {
       let gl = canvas.getContext('webgl2', params);
       const isWebGL2 = !!gl;
       if (!isWebGL2) gl = canvas.getContext('webgl', params) || canvas.getContext('experimental-webgl', params);
+      if (!gl) {
+        return {
+          gl: null,
+          ext: {
+            formatRGBA: null,
+            formatRG: null,
+            formatR: null,
+            halfFloatTexType: null,
+            supportLinearFiltering: false
+          }
+        };
+      }
 
       let halfFloat;
       let supportLinearFiltering;
@@ -580,17 +592,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })();
 
     let dye, velocity, divergence, curl, pressure;
-
-    const copyProgram = new Program(baseVertexShader, copyShader);
-    const clearProgram = new Program(baseVertexShader, clearShader);
-    const splatProgram = new Program(baseVertexShader, splatShader);
-    const advectionProgram = new Program(baseVertexShader, advectionShader);
-    const divergenceProgram = new Program(baseVertexShader, divergenceShader);
-    const curlProgram = new Program(baseVertexShader, curlShader);
-    const vorticityProgram = new Program(baseVertexShader, vorticityShader);
-    const pressureProgram = new Program(baseVertexShader, pressureShader);
-    const gradienSubtractProgram = new Program(baseVertexShader, gradientSubtractShader);
-    const displayMaterial = new Material(baseVertexShader, displayShaderSource);
+    let copyProgram, clearProgram, splatProgram, advectionProgram, divergenceProgram, curlProgram, vorticityProgram, pressureProgram, gradienSubtractProgram, displayMaterial;
 
     function initFramebuffers() {
       let simRes = getResolution(config.SIM_RESOLUTION);
@@ -711,8 +713,6 @@ document.addEventListener('DOMContentLoaded', () => {
       displayMaterial.setKeywords(displayKeywords);
     }
 
-    updateKeywords();
-    initFramebuffers();
     let lastUpdateTime = Date.now();
     let colorUpdateTimer = 0.0;
 
@@ -859,6 +859,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function clickSplat(pointer) {
+      if (!gl) return;
       const color = generateColor();
       color.r *= 10.0;
       color.g *= 10.0;
@@ -869,6 +870,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function splat(x, y, dx, dy, color) {
+      if (!gl) return;
       splatProgram.bind();
       gl.uniform1i(splatProgram.uniforms.uTarget, velocity.read.attach(0));
       gl.uniform1f(splatProgram.uniforms.aspectRatio, canvas.width / canvas.height);
@@ -1000,6 +1002,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Pointer event listeners
     function handleMouseDown(e) {
+      if (!gl) return;
       let pointer = pointers[0];
       let posX = scaleByPixelRatio(e.clientX);
       let posY = scaleByPixelRatio(e.clientY);
@@ -1024,6 +1027,8 @@ document.addEventListener('DOMContentLoaded', () => {
       let posX = scaleByPixelRatio(e.clientX);
       let posY = scaleByPixelRatio(e.clientY);
 
+      if (!gl) return;
+
       if (!firstMouseMoveHandled) {
         let color = generateColor();
         updatePointerMoveData(pointer, posX, posY, color);
@@ -1039,6 +1044,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleTouchStart(e) {
+      if (!gl) return;
       const touches = e.targetTouches;
       let pointer = pointers[0];
       for (let i = 0; i < touches.length; i++) {
@@ -1065,6 +1071,7 @@ document.addEventListener('DOMContentLoaded', () => {
         cursorSpeed = Math.hypot(cursorVX, cursorVY);
         idleTimer   = 0;
 
+        if (!gl) continue;
         pointer.down = true;
         updatePointerMoveData(pointer, posX, posY, pointer.color);
       }
@@ -1094,6 +1101,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Scroll event fluid splatting
     let lastScrollY = window.scrollY;
     window.addEventListener('scroll', () => {
+        if (!gl) return;
         if (isMobileDevice) return; // Mobile scrolls are touch-driven, handled by touchmove
         if (!userInteracted || !hasMouseMoved) return; // Block automated or default-center scroll splats
 
@@ -1109,7 +1117,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, { passive: true });
 
-    updateFrame();
+    if (gl) {
+        copyProgram = new Program(baseVertexShader, copyShader);
+        clearProgram = new Program(baseVertexShader, clearShader);
+        splatProgram = new Program(baseVertexShader, splatShader);
+        advectionProgram = new Program(baseVertexShader, advectionShader);
+        divergenceProgram = new Program(baseVertexShader, divergenceShader);
+        curlProgram = new Program(baseVertexShader, curlShader);
+        vorticityProgram = new Program(baseVertexShader, vorticityShader);
+        pressureProgram = new Program(baseVertexShader, pressureShader);
+        gradienSubtractProgram = new Program(baseVertexShader, gradientSubtractShader);
+        displayMaterial = new Material(baseVertexShader, displayShaderSource);
+
+        updateKeywords();
+        initFramebuffers();
+        updateFrame();
+    } else {
+        console.warn("WebGL not supported or restricted. Disabling fluid simulation background gracefully.");
+        canvas.style.display = 'none';
+    }
 
 
     /* ==============================================
@@ -1130,76 +1156,7 @@ document.addEventListener('DOMContentLoaded', () => {
     animateBubbles();
 
 
-    /* ==============================================
-       MAGNETIC BUTTON SYSTEM
-       ============================================== */
-    const btnMagnetic    = document.getElementById('btn-magnetic');
-    const waitlistBtn    = document.getElementById('waitlist-btn');
-    const rippleContainer = document.getElementById('btn-ripple-container');
 
-    if (btnMagnetic && waitlistBtn) {
-        let btnAnimId  = null;
-        let btnLerpX   = 0, btnLerpY = 0;
-        let btnTargetX = 0, btnTargetY = 0;
-        let isNear     = false;
-
-        function animateBtn() {
-            btnLerpX += (btnTargetX - btnLerpX) * 0.10;
-            btnLerpY += (btnTargetY - btnLerpY) * 0.10;
-            waitlistBtn.style.transform = `translate3d(${btnLerpX}px, ${btnLerpY}px, 0)`;
-            const dist = Math.hypot(btnLerpX, btnLerpY);
-            if (!isNear && dist < 0.5) {
-                waitlistBtn.style.transform = '';
-                btnLerpX = 0; btnLerpY = 0;
-                cancelAnimationFrame(btnAnimId);
-                btnAnimId = null;
-                return;
-            }
-            btnAnimId = requestAnimationFrame(animateBtn);
-        }
-
-        btnMagnetic.addEventListener('mouseenter', () => {
-            isNear = true;
-            waitlistBtn.classList.add('is-hovered');
-            if (!btnAnimId) btnAnimId = requestAnimationFrame(animateBtn);
-        });
-        btnMagnetic.addEventListener('mouseleave', () => {
-            isNear = false;
-            waitlistBtn.classList.remove('is-hovered');
-            btnTargetX = 0; btnTargetY = 0;
-            if (!btnAnimId) btnAnimId = requestAnimationFrame(animateBtn);
-        });
-        btnMagnetic.addEventListener('mousemove', (e) => {
-            const rect    = btnMagnetic.getBoundingClientRect();
-            const centerX = rect.left + rect.width  / 2;
-            const centerY = rect.top  + rect.height / 2;
-            const dx = e.clientX - centerX;
-            const dy = e.clientY - centerY;
-            const hw = rect.width  / 2, hh = rect.height / 2;
-            btnTargetX = dx * 0.44 * (hw / Math.max(hw, Math.abs(dx) + 1));
-            btnTargetY = dy * 0.44 * (hh / Math.max(hh, Math.abs(dy) + 1));
-        });
-
-        // Ripple on click
-        waitlistBtn.addEventListener('click', (e) => {
-            if (!rippleContainer) return;
-            const rect   = waitlistBtn.getBoundingClientRect();
-            const size   = Math.max(rect.width, rect.height);
-            const ripple = document.createElement('span');
-            ripple.className = 'btn-ripple';
-            ripple.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX - rect.left - size/2}px;top:${e.clientY - rect.top - size/2}px;`;
-            rippleContainer.appendChild(ripple);
-            setTimeout(() => ripple.remove(), 700);
-        });
-
-        // Touch glow
-        waitlistBtn.addEventListener('touchstart', () => {
-            waitlistBtn.classList.add('is-hovered');
-        }, { passive: true });
-        waitlistBtn.addEventListener('touchend', () => {
-            setTimeout(() => waitlistBtn.classList.remove('is-hovered'), 420);
-        }, { passive: true });
-    }
 
 
     /* ==============================================
