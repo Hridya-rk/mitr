@@ -608,55 +608,61 @@ body { overflow-x: hidden; min-height: 100vh; background-color: var(--color-bg);
     align-items: center;
     justify-content: center;
     position: relative;
-    padding: 1.55rem 2rem;
+    padding: 0 2rem;
+    width: 340px;
+    height: 84px;
+    flex: 0 0 340px;
     font-family: var(--font-coming-soon);
     font-weight: 600;
     font-size: 1rem;
-    letter-spacing: 0.16em;
-    text-indent: 0.16em;
+    letter-spacing: 0.12em;
+    text-indent: 0.12em;
     text-transform: uppercase;
     text-decoration: none;
     border-radius: 100px;
     cursor: none;
     overflow: visible;
-    border: 2px solid #2E3B42;
+    border: 2px solid #000000;
     /* Smooth transform for press mechanics and shadow reduction */
     transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
     will-change: transform, box-shadow;
     transform: translate(0);
-    flex: 0 1 320px;
-    min-width: 280px;
     white-space: nowrap;
+    text-align: center;
+    line-height: 1;
 }
 
 @media (max-width: 767px) {
     .btn {
-        padding: 1.25rem 1rem;
-        font-size: 0.82rem;
-        letter-spacing: 0.1em;
-        text-indent: 0.1em;
-        min-width: 240px;
+        padding: 0 1rem;
+        width: 300px;
+        height: 68px;
+        flex: 0 0 300px;
+        font-size: 0.84rem;
+        letter-spacing: 0.08em;
+        text-indent: 0.08em;
+        line-height: 1;
     }
 }
 
 .btn-primary {
     background: #F8EC33;
-    color: #2E3B42;
-    border: 2px solid #2E3B42;
-    box-shadow: 4px 4px 0px 0px #2E3B42;
+    color: #000000;
+    border: 2px solid #000000;
+    box-shadow: 4px 4px 0px 0px #000000;
 }
 
 /* Hovered state — CauseHouse style push down */
 .btn-primary:hover {
     transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0px 0px #2E3B42;
+    box-shadow: 2px 2px 0px 0px #000000;
     animation: none;
 }
 
 /* Active clicked state — CauseHouse style push down further */
 .btn-primary:active {
     transform: translate3d(3px, 3px, 0);
-    box-shadow: 1px 1px 0px 0px #2E3B42;
+    box-shadow: 1px 1px 0px 0px #000000;
     animation: none;
 }
 
@@ -790,7 +796,7 @@ body { overflow-x: hidden; min-height: 100vh; background-color: var(--color-bg);
     .section-title    { font-size: 3.25rem; }
     .section-subtitle { font-size: 1.05rem; }
 
-    .btn { padding: 1.55rem 2.2rem; font-size: 1.05rem; letter-spacing: 0.14em; text-indent: 0.14em; }
+    .btn { padding: 0 1.6rem; width: 340px; height: 84px; flex: 0 0 340px; font-size: 1.05rem; letter-spacing: 0.11em; text-indent: 0.11em; }
 }
 
 /* =============================================
@@ -802,7 +808,7 @@ body { overflow-x: hidden; min-height: 100vh; background-color: var(--color-bg);
     .waitlist-section { padding: 18rem 6rem 22rem; }
     .section-title    { font-size: 3.75rem; }
 
-    .btn { padding: 1.75rem 2.5rem; font-size: 1.1rem; letter-spacing: 0.16em; text-indent: 0.16em; }
+    .btn { padding: 0 1.8rem; width: 340px; height: 84px; flex: 0 0 340px; font-size: 1.1rem; letter-spacing: 0.12em; text-indent: 0.12em; }
 }
 
 /* =============================================
@@ -853,7 +859,7 @@ body {
    ============================================= */
 @media (max-width: 390px) {
     .section-title  { font-size: 1.75rem; }
-    .btn            { padding: 1.1rem 0.8rem; font-size: 0.76rem; letter-spacing: 0.08em; text-indent: 0.08em; }
+    .btn            { padding: 0 0.6rem; width: 280px; height: 60px; flex: 0 0 280px; font-size: 0.68rem; letter-spacing: 0.05em; text-indent: 0.05em; }
     .marquee-item   { font-size: 0.82rem; padding: 0 1.5rem; }
     .btn-magnetic   { padding: 36px; }
 }
@@ -868,5 +874,34 @@ body {
     }
     .marquee-inner { animation: none; }
     #fluid-canvas  { display: none; }
+}
+
+/* =============================================
+   SPECIFIC OVERRIDES FOR MITR BUTTONS (CACHE BYPASS)
+   ============================================= */
+.mitr-cta-btn {
+    width: 340px !important;
+    height: 84px !important;
+    flex: 0 0 340px !important;
+    padding: 0 2rem !important;
+    white-space: nowrap !important;
+}
+
+@media (max-width: 767px) {
+    .mitr-cta-btn {
+        width: 300px !important;
+        height: 68px !important;
+        flex: 0 0 300px !important;
+        padding: 0 1rem !important;
+    }
+}
+
+@media (max-width: 390px) {
+    .mitr-cta-btn {
+        width: 280px !important;
+        height: 60px !important;
+        flex: 0 0 280px !important;
+        padding: 0 0.6rem !important;
+    }
 }
 
