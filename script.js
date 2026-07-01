@@ -1002,6 +1002,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Pointer event listeners
     function handleMouseDown(e) {
+      if (!assetsReady) return;
       if (!gl) return;
       let pointer = pointers[0];
       let posX = scaleByPixelRatio(e.clientX);
@@ -1012,6 +1013,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let firstMouseMoveHandled = false;
     function handleMouseMove(e) {
+      if (!assetsReady) return;
       hasMouseMoved = true;
       let pointer = pointers[0];
       
@@ -1044,6 +1046,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleTouchStart(e) {
+      if (!assetsReady) return;
       if (!gl) return;
       const touches = e.targetTouches;
       let pointer = pointers[0];
@@ -1056,6 +1059,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleTouchMove(e) {
+      if (!assetsReady) return;
       const touches = e.targetTouches;
       let pointer = pointers[0];
       for (let i = 0; i < touches.length; i++) {
